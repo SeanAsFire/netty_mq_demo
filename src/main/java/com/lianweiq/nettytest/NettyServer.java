@@ -32,7 +32,7 @@ public class NettyServer {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
                         ChannelPipeline pipeline = ch.pipeline();
-                        pipeline.addLast(new TimeEncoder(), new PrintServerHandler());
+                        pipeline.addLast(new TimeEncoder(), new TimeServerHandler());
                     }
                 }).childOption(ChannelOption.SO_BACKLOG, 124).childOption(ChannelOption.SO_KEEPALIVE, true);
 

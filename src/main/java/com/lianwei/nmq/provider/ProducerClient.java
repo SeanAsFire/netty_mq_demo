@@ -16,18 +16,21 @@ import io.netty.channel.socket.nio.NioSocketChannel;
  * @Time 15:41
  * @Description
  */
-public class ProducerClient {
+public abstract class ProducerClient {
 
-    private final int port;
+    private  int port;
 
-    private final String host;
+    private  String host;
+
+    public ProducerClient() {
+    }
 
     public ProducerClient(String host, int port) {
         this.host = host;
         this.port = port;
     }
 
-    public void start() {
+    public void send() {
 
         Bootstrap bootstrap = new Bootstrap();
 
@@ -61,21 +64,16 @@ public class ProducerClient {
         }
     }
 
-    public String getQueue() {
-        return "TestQueue";
-    }
+
+    abstract String getQueue();
+
+    abstract Object getMessage();
 
     public MqMessage orgaMessage() {
-        MqMessage message = new MqMessage("asyucguygscygsdcb");
+        MqMessage message = new MqMessage(getMessage());
         message.setQueueName(getQueue());
         System.out.println(ByteUtil.bytesToObject(message.getContent()));
         return message;
     }
 
-    public static void main(String[] args) {
-        ProducerClient client = new ProducerClient("127.0.0.1", 9999);
-
-        client.start();
-
-    }
 }

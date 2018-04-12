@@ -27,11 +27,14 @@ public class MqMessageDecoder extends ByteToMessageDecoder {
         String uuid = in.readBytes(64).toString(CharsetUtil.UTF_8);
 
         int queueLen = in.readInt();
+        String queueName = "";
+        if (queueLen != 0){
+          queueName  = in.readBytes(queueLen).toString(CharsetUtil.UTF_8);
+        }
 
-        String queueName = in.readBytes(queueLen).toString(CharsetUtil.UTF_8);
+
 
         int contentLen = in.readInt();
-
         if (in.readableBytes() < contentLen) {
             return;
         }

@@ -24,6 +24,9 @@ public class MqMessageEncoder extends MessageToByteEncoder<MqMessage> {
         out.writeInt(msg.getQueueLen());
         out.writeBytes(msg.getQueueName().getBytes());
         out.writeInt(msg.getContentLen());
+        if (msg.getContentLen() == 0){
+            return;
+        }
         out.writeBytes(msg.getContent());
     }
 }

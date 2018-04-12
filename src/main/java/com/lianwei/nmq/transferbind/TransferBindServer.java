@@ -3,6 +3,7 @@ package com.lianwei.nmq.transferbind;
 import com.lianwei.nmq.MqMessageDecoder;
 import com.lianwei.nmq.MqMessageEncoder;
 
+import com.lianweiq.nettyheartbeat.HeartBeatClientHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -27,7 +28,6 @@ public class TransferBindServer {
 
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
-
         ServerBootstrap bootstrap = new ServerBootstrap();
         bootstrap.channel(NioServerSocketChannel.class).group(bossGroup, workerGroup)
                 .childHandler(new ChannelInitializer<SocketChannel>() {
@@ -38,6 +38,7 @@ public class TransferBindServer {
                         pipeline.addLast("encoder", new MqMessageEncoder());
                         pipeline.addLast("decoder", new MqMessageDecoder());
                         pipeline.addLast("handler", new TransferHandler());
+                        pipeline.addLast("handler1",new HeartBeatClientHandler());
                     }
                 }).option(ChannelOption.SO_BACKLOG, 124).childOption(ChannelOption.SO_KEEPALIVE, true);
 

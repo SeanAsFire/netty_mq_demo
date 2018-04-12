@@ -53,7 +53,8 @@ public class NettyClient {
             @Override
             protected void initChannel(SocketChannel ch) throws Exception {
                 ChannelPipeline pipeline = ch.pipeline();
-                pipeline.addLast(new HeartBeatClientHandler());
+                pipeline.addLast(new TimeDecoder());
+                pipeline.addLast(new ReplyClientHandler());
             }
         });
         ChannelFuture future = null;

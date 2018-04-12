@@ -74,6 +74,10 @@ public class MqMessage {
     }
 
     public MqMessage() {
+        byte[] bytes = ByteUtil.objectToBytes("GetRequest");
+        this.uuid = Sha256Hash.sha256Hash(bytes);
+        this.contentLen = bytes.length;
+        this.content = bytes;
     }
 
     public int getQueueLen() {

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.lianwei.nmq.provider.MqMessage;
 
@@ -17,8 +18,10 @@ import io.netty.channel.SimpleChannelInboundHandler;
  */
 public abstract class AbstractCoreTransfer<T> extends SimpleChannelInboundHandler<T> {
 
-    protected static Map<String, Queue<MqMessage>> messageQueue = new HashMap<>();
+    protected  Map<String, Queue<MqMessage>> messageQueue = new ConcurrentHashMap<>();
 
-    protected static Map<String, List<String>> queueHostMap = new HashMap<>();
+    protected  Map<String, List<String>> queueHostMap = new ConcurrentHashMap<>();
+
+    public static Map<String,List<String>> queueIpMap = new ConcurrentHashMap<>();
 
 }
