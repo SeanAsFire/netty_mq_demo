@@ -3,13 +3,15 @@ package com.lianwei.nmq.provider;
 import com.lianweiq.util.ByteUtil;
 import com.lianweiq.util.Sha256Hash;
 
+import java.io.Serializable;
+
 /**
  * @author lianweiq
  * @Date 2018/4/11,
  * @Time 15:45
  * @Description
  */
-public class MqMessage {
+public class MqMessage implements Serializable {
 
     private int version = 1;
 

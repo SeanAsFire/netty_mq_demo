@@ -15,7 +15,7 @@ public class TestMessageSend1 extends ProducerClient {
 
     @Override
     String getQueue() {
-        return "TestQueue-1";
+        return "TestQueue";
     }
 
     @Override

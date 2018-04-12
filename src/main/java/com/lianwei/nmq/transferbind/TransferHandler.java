@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import com.lianwei.nmq.FileUtil;
 import com.lianwei.nmq.provider.MqMessage;
 import com.lianweiq.util.ByteUtil;
 
@@ -34,6 +35,8 @@ public class TransferHandler extends AbstractCoreTransfer<MqMessage> {
             }
             ips.remove(ctx.channel().remoteAddress().toString());
         }
+
+        FileUtil.write(ByteUtil.objectToBytes(queueIpMap),"queueIpMap.txt");
         ctx.fireChannelInactive();
     }
 
@@ -45,6 +48,9 @@ public class TransferHandler extends AbstractCoreTransfer<MqMessage> {
             System.out.println(msg.getContent().toString());
             doProducer(ctx,msg);
         }
+        FileUtil.write(ByteUtil.objectToBytes(queueIpMap),"queueIpMap.txt");
+        FileUtil.write(ByteUtil.objectToBytes(messageQueue),"messageQueue.txt");
+        FileUtil.write(ByteUtil.objectToBytes(queueHostMap),"queueHostMap.txt");
 
     }
 
@@ -65,11 +71,11 @@ public class TransferHandler extends AbstractCoreTransfer<MqMessage> {
         }
         Queue<MqMessage> mqMessageQueue = messageQueue.get(msg.getQueueName());
         if (mqMessageQueue == null) {
-            mqMessageQueue = new LinkedBlockingQueue<>(1);
+            mqMessageQueue = new LinkedBlockingQueue<>(1000);
             messageQueue.put(msg.getQueueName(), mqMessageQueue);
 
         }
-        boolean isFull = messageQueue.get(msg.getQueueName()).offer(msg);{
+        boolean isFull = mqMessageQueue.offer(msg);{
             if (!isFull){
                 System.out.println("队列满了");
             }

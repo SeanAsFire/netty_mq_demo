@@ -13,11 +13,6 @@ public class Start {
         ProducerClient client = new TestMessageSend("127.0.0.1",9999);
         ProducerClient client1 = new TestMessageSend1("127.0.0.1",9999);
         client.send();
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         client1.send();
     }
 }
