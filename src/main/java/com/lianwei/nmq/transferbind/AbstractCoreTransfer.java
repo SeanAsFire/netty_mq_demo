@@ -44,7 +44,7 @@ public abstract class AbstractCoreTransfer<T> extends SimpleChannelInboundHandle
             if (FileUtil.read("queueIpMap.txt") == null){
                 queueIpMap = new ConcurrentHashMap<>();
             }else {
-                queueIpMap = (Map<String, List<String>>) ByteUtil.bytesToObject(FileUtil.read("queueHostMap.txt"));
+                queueIpMap = (Map<String, List<String>>) ByteUtil.bytesToObject(FileUtil.read("queueIpMap.txt"));
             }
 
         }

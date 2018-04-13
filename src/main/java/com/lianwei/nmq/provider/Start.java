@@ -11,7 +11,7 @@ public class Start {
 
     public static void main(String[] args) throws InterruptedException {
         ProducerClient client = new TestMessageSend("127.0.0.1",9999);
-        for (int i= 0;i<50;i++){
+        for (int i= 0;i<500;i++){
             client.send();
             Thread.sleep(10);
         }

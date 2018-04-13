@@ -49,7 +49,17 @@ public abstract class ConsumerClient {
             });
             try {
                 ChannelFuture future = bootstrap.connect(host, port).sync();
-               future.channel().writeAndFlush(orgaMessage());
+               ChannelFuture future1 = future.channel().writeAndFlush(orgaMessage());
+               future1.addListener(new ChannelFutureListener() {
+                   @Override
+                   public void operationComplete(ChannelFuture channelFuture) throws Exception {
+                       if (channelFuture == future1 && channelFuture.isSuccess()){
+                           System.out.println("消费者链接完成，断开！");
+                           future1.channel().close();
+                       }
+                   }
+               });
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
