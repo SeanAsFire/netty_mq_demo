@@ -21,21 +21,27 @@ public class MqMessageDecoder extends ByteToMessageDecoder {
         if (in.readableBytes() < 72) {
             return;
         }
+        int readIndex = in.readerIndex();
+        int writeIndex = in.writerIndex();
 
         int version = in.readInt();
 
         String uuid = in.readBytes(64).toString(CharsetUtil.UTF_8);
 
         int queueLen = in.readInt();
-        String queueName = "";
-        if (queueLen != 0){
-          queueName  = in.readBytes(queueLen).toString(CharsetUtil.UTF_8);
+
+        if (in.readableBytes() < queueLen){
+            in.readerIndex(readIndex);
+            in.writerIndex(writeIndex);
+            return;
         }
-
-
+        String queueName  = in.readBytes(queueLen).toString(CharsetUtil.UTF_8);
 
         int contentLen = in.readInt();
+
         if (in.readableBytes() < contentLen) {
+            in.readerIndex(readIndex);
+            in.writerIndex(writeIndex);
             return;
         }
         MqMessage message = new MqMessage();

@@ -99,7 +99,7 @@ public class TransferHandler extends AbstractCoreTransfer<MqMessage> {
 
         Queue<MqMessage> mqMessageQueue = messageQueue.get(msg.getQueueName());
         List<MqMessage> messageList = new ArrayList<>();
-        if (mqMessageQueue == null) {
+        if (mqMessageQueue == null || mqMessageQueue.poll() == null) {
             MqMessage message = new MqMessage("没有提供者");
             message.setQueueName(msg.getQueueName());
             messageList.add(message);

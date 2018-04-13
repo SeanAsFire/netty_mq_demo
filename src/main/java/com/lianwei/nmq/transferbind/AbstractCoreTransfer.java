@@ -27,9 +27,11 @@ public abstract class AbstractCoreTransfer<T> extends SimpleChannelInboundHandle
     public static Map<String,List<String>> queueIpMap = null;
 
     {
+        //没拿到文件
             if (FileUtil.read("messageQueue.txt") == null){
                 messageQueue = new ConcurrentHashMap<>();
             }else {
+                //拿到文件，反序列化成指定模型
                 messageQueue = (Map<String, Queue<MqMessage>>) ByteUtil.bytesToObject(FileUtil.read("messageQueue.txt"));
             }
 

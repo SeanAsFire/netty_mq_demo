@@ -9,10 +9,11 @@ package com.lianwei.nmq.provider;
  */
 public class Start {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws InterruptedException {
         ProducerClient client = new TestMessageSend("127.0.0.1",9999);
-        ProducerClient client1 = new TestMessageSend1("127.0.0.1",9999);
-        client.send();
-        client1.send();
+        for (int i= 0;i<50;i++){
+            client.send();
+            Thread.sleep(10);
+        }
     }
 }
